@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net7Api", "Net7Api", "{5D54
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7Api.V1", "Net7Api\Net7Api.V1\Net7Api.V1.csproj", "{20C9B6C1-2611-4824-93E3-A77AA7C211F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net7Api.Models", "Net7Api\Net7Api.Models\Net7Api.Models.csproj", "{7FC6337B-D47B-44AB-860F-87B48E9721E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +28,13 @@ Global
 		{20C9B6C1-2611-4824-93E3-A77AA7C211F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20C9B6C1-2611-4824-93E3-A77AA7C211F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20C9B6C1-2611-4824-93E3-A77AA7C211F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FC6337B-D47B-44AB-860F-87B48E9721E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC6337B-D47B-44AB-860F-87B48E9721E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC6337B-D47B-44AB-860F-87B48E9721E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC6337B-D47B-44AB-860F-87B48E9721E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{20C9B6C1-2611-4824-93E3-A77AA7C211F7} = {5D5447FD-27D9-4CDE-A2A2-435352364507}
+		{7FC6337B-D47B-44AB-860F-87B48E9721E7} = {5D5447FD-27D9-4CDE-A2A2-435352364507}
 	EndGlobalSection
 EndGlobal

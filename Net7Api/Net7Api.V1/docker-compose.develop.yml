@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  # 데이터 베이스 
+  database: 
+    image: mariadb:10.6.13
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: skfdkfk12
+    # 개발인경우 호스트 컴퓨터 포트 허용 
+    ports:
+      - "3306:3306"  
+    volumes:
+      - net7api:/var/lib/mysql
+    # 다른 컨테이너에서 175.17.0.10 주소로 접근 
+    networks: 
+      net7api:
+        ipv4_address: 175.17.0.10 
+# 네트웍 대역 175.17.0.0/24 으로 브릿지 모드 사용
+networks: 
+  net7api:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 175.17.0.0/24
+          gateway: 175.17.0.1
+volumes:
+  # app 실행 root 마운트 볼륨
+  net7api:
