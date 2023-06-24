@@ -1,6 +1,6 @@
 namespace ThreadsJoin;
 
-public class Thread09
+public class Thread11
 {
     /// <summary>
     /// 실행한다.
@@ -8,20 +8,15 @@ public class Thread09
     public void run()
     {
         // 컨테이너를 하나 생성한다.
-        Thread09Container container = new Thread09Container();
-        
-        // 스레드 2개를 생성한다.
-        Thread thread1 = new Thread(ThreadFunc);
-        Thread thread2 = new Thread(ThreadFunc);
-        
-        // 2개의스레드를 실행한다.
-        thread1.Start(container);
-        thread2.Start(container);
-        
-        // 2개의 스레드 실행이 끝날때까지 대기한다.
-        thread1.Join();
-        thread2.Join();
+        Thread11Container container = new Thread11Container();
 
+        // 스레드풀에 담는다.
+        ThreadPool.QueueUserWorkItem(ThreadFunc, container);
+        ThreadPool.QueueUserWorkItem(ThreadFunc, container);
+
+        // 스레드 풀에 넣었기때문에 종료상태를 명시적으로 알수 없어서 대기를 호출한다.
+        Thread.Sleep(1000);
+        
         // 결과를 출력한다.
         Console.WriteLine();
         Console.WriteLine(container.Number);
@@ -34,16 +29,16 @@ public class Thread09
     private void ThreadFunc(object? obj)
     {
         // 유효성을 검사한다.
-        if (obj is not Thread09Container)
+        if (obj is not Thread11Container)
             return;
 
         // 형을 변환한다.
-        Thread09Container container = obj as Thread09Container ?? new Thread09Container();
+        Thread11Container container = obj as Thread11Container ?? new Thread11Container();
         
         // 값을 증가 시킨다.
         // loop 의 값이 증가할수록 공유자원 이슈로 값은 튀어나간다.
         // 10.. 100.. 1000..
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < 1000000; i++)
         {
             // 값을 증가시킨다.
             container.IncrementNumber();
@@ -54,28 +49,21 @@ public class Thread09
 /// <summary>
 /// 테스트를 위한 컨테이너 클래스 
 /// </summary>
-public class Thread09Container
+public class Thread11Container
 {
-    /// <summary>
-    /// Thread Safe 를 위한 변수
-    /// </summary>
-    public object _numberLock { get; set; } = new object();
+    private int _number = 0;
     
     /// <summary>
     /// 테스트할 값
     /// </summary>
-    public int Number { get; set; }
+    public int Number => _number;
 
     /// <summary>
     /// 내부 Number 값을 증가 시킨다.
     /// </summary>
     public void IncrementNumber()
     {
-        // Thread-safe 
-        lock (_numberLock)
-        {
-            // 값을 증가시킨다.
-            Number++;
-        }
+        // 일부 가산 감산에대해서는 Thread Safe 하게 동작하도록 하는 기능
+        Interlocked.Increment(ref _number);
     }
 }

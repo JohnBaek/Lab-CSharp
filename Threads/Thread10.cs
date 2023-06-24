@@ -1,6 +1,6 @@
 namespace ThreadsJoin;
 
-public class Thread09
+public class Thread10
 {
     /// <summary>
     /// 실행한다.
@@ -8,7 +8,7 @@ public class Thread09
     public void run()
     {
         // 컨테이너를 하나 생성한다.
-        Thread09Container container = new Thread09Container();
+        Thread10Container container = new Thread10Container();
         
         // 스레드 2개를 생성한다.
         Thread thread1 = new Thread(ThreadFunc);
@@ -34,11 +34,11 @@ public class Thread09
     private void ThreadFunc(object? obj)
     {
         // 유효성을 검사한다.
-        if (obj is not Thread09Container)
+        if (obj is not Thread10Container)
             return;
 
         // 형을 변환한다.
-        Thread09Container container = obj as Thread09Container ?? new Thread09Container();
+        Thread10Container container = obj as Thread10Container ?? new Thread10Container();
         
         // 값을 증가 시킨다.
         // loop 의 값이 증가할수록 공유자원 이슈로 값은 튀어나간다.
@@ -54,28 +54,21 @@ public class Thread09
 /// <summary>
 /// 테스트를 위한 컨테이너 클래스 
 /// </summary>
-public class Thread09Container
+public class Thread10Container
 {
-    /// <summary>
-    /// Thread Safe 를 위한 변수
-    /// </summary>
-    public object _numberLock { get; set; } = new object();
+    private int _number = 0;
     
     /// <summary>
     /// 테스트할 값
     /// </summary>
-    public int Number { get; set; }
+    public int Number => _number;
 
     /// <summary>
     /// 내부 Number 값을 증가 시킨다.
     /// </summary>
     public void IncrementNumber()
     {
-        // Thread-safe 
-        lock (_numberLock)
-        {
-            // 값을 증가시킨다.
-            Number++;
-        }
+        // 일부 가산 감산에대해서는 Thread Safe 하게 동작하도록 하는 기능
+        Interlocked.Increment(ref _number);
     }
 }

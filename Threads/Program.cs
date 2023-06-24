@@ -1,4 +1,4 @@
 ﻿using ThreadsJoin;
 
 
-new Thread09().run();
+new Thread12().run();
